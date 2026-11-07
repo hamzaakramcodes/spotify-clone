@@ -75,9 +75,8 @@ function convertSeconds(seconds) {
 console.log('6');
 
 async function displayAlbum() {
-    // let a = await fetch('songs')
-    let a = await fetch("http://127.0.0.1:3000/songs/")
-    // let a = await fetch("file:///C:/Users/HamzaAkramCodes/OneDrive/1%20web%20development/===projects===/Spotify%20Clone%20july-8-2026/songs/")
+    let a = await fetch('songs')
+    // let a = await fetch("http://127.0.0.1:3000/songs/")
 
     let response = await a.text();
     console.log(response);
