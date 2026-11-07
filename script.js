@@ -73,7 +73,7 @@ function convertSeconds(seconds) {
     return `${formattedMins}:${formattedSecs}`;
 }
 console.log('6');
-
+/*
 async function displayAlbum() {
     let a = await fetch('songs')
     // let a = await fetch("http://127.0.0.1:3000/songs/")
@@ -117,7 +117,43 @@ async function displayAlbum() {
 
 }
 displayAlbum()
+*/
+async function displayAlbum() {
+    // Album list hardcode kar dein (Vercel par fetch('songs') kaam nahi karta)
+    const albums = [
+        { folder: 'ncs',  title: 'NCS Songs',      description: 'No Copyright Sounds' },
+        { folder: 'cs',   title: 'CS Songs',       description: 'Chill Songs' },
+        { folder: 'test', title: 'Test Album',     description: 'Testing songs' }
+        // apne asli folders ke naam yahan likhein
+    ];
 
+    let cardContainer = document.querySelector('.cardContainer');
+    cardContainer.innerHTML = ''; // pehle clear karein
+
+    for (const album of albums) {
+        cardContainer.innerHTML += `
+            <div data-folder="${album.folder}" class="card">
+                <div class="img">
+                    <img src="songs/${album.folder}/cover.jpg" alt="">
+                </div>
+                <div class="detail">
+                    <h3>${album.title}</h3>
+                    <p>${album.description}</p>
+                </div>
+            </div>`;
+    }
+
+    // Card click par us album ke songs load karo
+    Array.from(document.getElementsByClassName('card')).forEach(e => {
+        e.addEventListener('click', async item => {
+            songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`);
+            showSongList();
+            playMusic(songs[0]);
+            document.querySelector('.left').style.left = '0px';
+        });
+    });
+}
+displayAlbum();
 
 // this event listener is use to controll the voice of song
 document.querySelector('.volume').getElementsByTagName('input')[0].addEventListener('change', e => {
